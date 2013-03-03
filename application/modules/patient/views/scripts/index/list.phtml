@@ -1,0 +1,70 @@
+<h2>Lista de Pacientes</h2>
+<p>
+	<a class="btn btn-info" href="<?php echo $this->url(array('module'=>'patient','controller'=>'index','action'=>'add'));?>"><i class="icon-plus-sign icon-white"></i> Agregar paciente</a>
+</p>	
+
+<?php echo App_View_Helper_FlashMessages::flashMessages(); ?>
+
+<table class="table">
+    <thead>
+        <tr>
+           	<th>Identificación</th>            
+            <th>Fecha de Cumpleaños</th>
+            <th>Telefono</th>
+            <th>Observación</th>            
+            <th>Editar</th>
+        </tr>
+        <tr>
+            <td id="identification"></td>
+            <td id="birthday"></td>
+            <td id="phone"></td>
+            <td id="observation"></td>            
+            <td></td>
+        </tr>        
+    </thead>
+    <tbody>
+    <?php foreach ($this->resultSet AS $key => $value) : ?>
+    	<tr>
+    		<td><?php echo $value->getIdentification(); ?></td>
+    		<td><?php echo substr($value->getBirthday(),0,10); ?></td>
+    		<td><?php echo $value->getPhone(); ?></td>
+    		<td><?php echo $value->getObservation(); ?></td>
+    		<td><a class="btn btn-success" href="<?php echo $this->url(array('module'=>'patient','controller'=>'index','action'=>'edit', 'id' => $value->getPatientid()), null, true);?>"><i class="icon-edit"></i></a></td>
+    	</tr>
+    <?php endforeach;?>
+    </tbody>
+    <tfoot>    	
+		<tr>
+			<th>Identificación</th>            
+            <th>Fecha de Cumpleaños</th>
+            <th>Telefono</th>
+            <th>Observación</th>            
+            <th>Editar</th>
+		</tr>
+	</tfoot>
+</table>
+<script type="text/javascript">
+$(document).on('ready', function() {
+	oTable = $('.table').dataTable({
+            "aaSorting"   	: [],
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    		"sPaginationType": "bootstrap",	
+            "bStateSave"  	: false,                       
+			"bSortCellsTop" : true,
+            "oLanguage" : {
+                "sUrl" : baseUrl + "/widget/DataTables/lang.es.txt"
+            }
+        }).columnFilter({
+            aoColumns : [{
+                type : "number", sSelector: "#identification"
+            },{
+                type : "text", sSelector: "#birthday"
+            },{
+                type : "text", sSelector: "#phone"
+            },{
+                type : "text", sSelector: "#observation"
+            }]
+        });
+	$("#birthday > span > input").datepicker();
+}); 
+</script>

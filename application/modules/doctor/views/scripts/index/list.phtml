@@ -1,0 +1,76 @@
+<h2>Lista de Doctores</h2>
+<p>
+	<a class="btn btn-info" href="<?php echo $this->url(array('module'=>'doctor','controller'=>'index','action'=>'add'));?>"><i class="icon-plus-sign icon-white"></i> Agregar doctor</a>
+</p>	
+
+<?php echo App_View_Helper_FlashMessages::flashMessages(); ?>
+
+<table class="table">
+    <thead>
+        <tr>
+        	<th>Nombre</th>
+           	<th>Identificación</th>            
+            <th>Fecha de Cumpleaños</th>
+            <th>Horario</th>
+            <th>Estado</th>            
+            <th>Editar</th>
+        </tr>
+        <tr>
+        	<td id="name"></td>
+            <td id="identification"></td>
+            <td id="birthday"></td>
+            <td id="horary"></td>
+            <td id="status"></td>            
+            <td></td>
+        </tr>        
+    </thead>
+    <tbody>
+    <?php foreach ($this->resultSet AS $key => $value) : ?>
+    	<tr>
+    		<td><?php echo $value->getName(); ?></td>
+    		<td><?php echo $value->getIdentification(); ?></td>
+    		<td><?php echo substr($value->getBirthday(),0,10); ?></td>
+    		<td><?php echo $value->getStartime(); ?> A <?php echo $value->getEndtime(); ?></td>
+    		<td><?php echo ($value->getStatus()) ? 'Activo' : 'Inactivo' ;?></td>
+    		<td><a class="btn btn-success" href="<?php echo $this->url(array('module'=>'doctor','controller'=>'index','action'=>'edit', 'id' => $value->getDoctorid()), null, true);?>"><i class="icon-edit"></i></a></td>
+    	</tr>
+    <?php endforeach;?>
+    </tbody>
+    <tfoot>    	
+		<tr>
+			<th>Nombre</th>
+           	<th>Identificación</th>            
+            <th>Fecha de Cumpleaños</th>
+            <th>Horario</th>
+            <th>Estado</th>            
+            <th>Editar</th>
+		</tr>
+	</tfoot>
+</table>
+<script type="text/javascript">
+$(document).on('ready', function() {
+	oTable = $('.table').dataTable({
+            "aaSorting"   	: [],
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    		"sPaginationType": "bootstrap",	
+            "bStateSave"  	: false,                       
+			"bSortCellsTop" : true,
+            "oLanguage" : {
+                "sUrl" : baseUrl + "/widget/DataTables/lang.es.txt"
+            }
+        }).columnFilter({
+            aoColumns : [{
+                type : "text", sSelector: "#name"
+            },{
+                type : "number", sSelector: "#identification"
+            },{
+                type : "text", sSelector: "#birthday"
+            },{
+                type : "text", sSelector: "#horary"
+            },{
+            	type : "select", sSelector: "#status", values: [ 'Activo', 'Inactivo' ]
+            }]
+        });
+	$("#birthday > span > input").datepicker();
+}); 
+</script>

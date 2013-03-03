@@ -1,0 +1,57 @@
+<h2>Lista de Especializaciones</h2>
+<p>
+	<a class="btn btn-info" href="<?php echo $this->url(array('module'=>'specialization','controller'=>'index','action'=>'add'));?>"><i class="icon-plus-sign icon-white"></i> Crear Especialización</a>
+</p>	
+
+<?php echo App_View_Helper_FlashMessages::flashMessages(); ?>
+
+<table class="table">
+    <thead>
+        <tr>
+           	<th>Nombre</th>            
+            <th>Estado</th>            
+            <th>Editar</th>
+        </tr>
+        <tr>
+            <td id="name"></td>
+            <td id="status"></td>            
+            <td></td>
+        </tr>        
+    </thead>
+    <tbody>
+    <?php foreach ($this->resultSet AS $key => $value) : ?>
+    	<tr>
+    		<td><?php echo $value->getName(); ?></td>
+    		<td><?php echo ($value->getStatus()) ? 'Activo' : 'Inactivo' ;?></td>
+    		<td><a class="btn btn-success" href="<?php echo $this->url(array('module'=>'specialization','controller'=>'index','action'=>'edit', 'id' => $value->getSpecializationid()), null, true);?>"><i class="icon-edit"></i></a></td>
+    	</tr>
+    <?php endforeach;?>
+    </tbody>
+    <tfoot>    	
+		<tr>
+			<th>Nombre</th>            
+            <th>Estado</th>            
+            <th>Editar</th>
+		</tr>
+	</tfoot>
+</table>
+<script type="text/javascript">
+$(document).on('ready', function() {
+	oTable = $('.table').dataTable({
+            "aaSorting"   	: [],
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    		"sPaginationType": "bootstrap",	
+            "bStateSave"  	: false,                       
+			"bSortCellsTop" : true,
+            "oLanguage" : {
+                "sUrl" : baseUrl + "/widget/DataTables/lang.es.txt"
+            }
+        }).columnFilter({
+            aoColumns : [{
+                type : "text", sSelector: "#name"
+            },{
+            	type : "select", sSelector: "#status", values: [ 'Activo', 'Inactivo' ]
+            }]
+        });
+}); 
+</script>

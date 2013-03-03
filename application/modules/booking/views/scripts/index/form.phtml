@@ -1,0 +1,34 @@
+<p>
+	<a class="btn btn-info" href="<?php echo $this->url(array('module'=>'booking','controller'=>'index','action'=>'list'), null, true);?>"><i class="icon-arrow-left icon-white"></i> Volver</a>
+</p>
+<?php echo $this->form; ?>
+<script>
+  $.widget( "ui.timespinner", $.ui.spinner, {
+    options: {
+      // seconds
+      step: 60 * 1000,
+      // hours
+      page: 60      
+    },
+ 
+    _parse: function( value ) {
+      if ( typeof value === "string" ) {
+        // already a timestamp
+        if ( Number( value ) == value ) {
+          return Number( value );
+        }
+        return +Globalize.parseDate( value );
+      }
+      return value;
+    },
+ 
+    _format: function( value ) {
+      return Globalize.format( new Date(value), "t" );
+    }
+  });
+ 
+  $(function() {
+	Globalize.culture('de-DE');
+    $( "#time" ).timespinner();    
+  });
+  </script>

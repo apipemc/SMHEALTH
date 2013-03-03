@@ -1,0 +1,74 @@
+<h2>Lista de Reservas</h2>
+<p>
+	<a class="btn btn-info" href="<?php echo $this->url(array('module'=>'booking','controller'=>'index','action'=>'add'));?>"><i class="icon-plus-sign icon-white"></i> Agregar reserva</a>
+</p>	
+<?php echo App_View_Helper_FlashMessages::flashMessages(); ?>
+<table class="table">
+    <thead>
+        <tr>
+        	<th>Fecha Reserva</th>
+           	<th>Hora Reserva</th>            
+            <th>Doctor</th>
+            <th>Paciente</th>
+            <th>Estado</th>            
+            <th>Editar</th>
+        </tr>
+        <tr>
+        	<td id="registrationdate"></td>
+            <td id="registrationtime"></td>
+            <td id="doctor"></td>
+            <td id="patient"></td>
+            <td id="status"></td>            
+            <td></td>
+        </tr>        
+    </thead>
+    <tbody>
+    <?php foreach ($this->resultSet AS $key => $value) : ?>
+    	<tr>
+    		<td><?php echo $value->Date; ?></td>
+    		<td><?php echo $value->Time; ?></td>
+    		<td><?php echo $value->Doctor; ?></td>
+    		<td><?php echo $value->Patient; ?></td>
+    		<td><?php echo ($value->Status) ? 'Activo' : 'Inactivo' ;?></td>
+    		<td><a class="btn btn-success" href="<?php echo $this->url(array('module'=>'booking','controller'=>'index','action'=>'edit', 'id' => $value->BookingId), null, true);?>"><i class="icon-edit"></i></a></td>
+    	</tr>
+    <?php endforeach;?>
+    </tbody>
+    <tfoot>    	
+		<tr>
+			<th>Fecha Reserva</th>
+           	<th>Hora Reserva</th>            
+            <th>Doctor</th>
+            <th>Paciente</th>
+            <th>Estado</th>            
+            <th>Editar</th>
+		</tr>
+	</tfoot>
+</table>
+<script type="text/javascript">
+$(document).on('ready', function() {
+	oTable = $('.table').dataTable({
+            "aaSorting"   	: [],
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    		"sPaginationType": "bootstrap",	
+            "bStateSave"  	: false,                       
+			"bSortCellsTop" : true,
+            "oLanguage" : {
+                "sUrl" : baseUrl + "/widget/DataTables/lang.es.txt"
+            }
+        }).columnFilter({
+            aoColumns : [{
+                type : "text", sSelector: "#registrationdate"
+            },{
+                type : "number", sSelector: "#registrationtime"
+            },{
+                type : "text", sSelector: "#doctor"
+            },{
+                type : "number", sSelector: "#patient"
+            },{
+            	type : "select", sSelector: "#status", values: [ 'Activo', 'Inactivo' ]
+            }]
+        });
+	$("#registrationdate > span > input").datepicker();
+}); 
+</script>

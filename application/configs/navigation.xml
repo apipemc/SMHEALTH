@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>		
+		<root>
+			<label>Root</label>
+			<uri>/</uri>
+			<pages>
+				<projects>
+					<label>Citas</label>			
+					<module>booking</module>
+					<controller>index</controller>
+					<action>list</action>
+					<resource>booking:index</resource>
+					<privilege>list</privilege>				
+				</projects>
+				<client>
+					<label>Pacientes</label>			
+					<module>patient</module>
+					<controller>index</controller>
+					<action>list</action>
+					<resource>patient:index</resource>
+					<privilege>list</privilege>				
+				</client>
+				<users>
+					<label>Doctores</label>			
+					<module>doctor</module>
+					<controller>index</controller>
+					<action>list</action>
+					<resource>doctor:index</resource>
+					<privilege>list</privilege>				
+				</users>
+				<actions>
+					<label>Especializaciones</label>			
+					<module>specialization</module>
+					<controller>index</controller>
+					<action>list</action>
+					<resource>specialization:index</resource>	
+					<privilege>list</privilege>			
+				</actions>				
+				<logout>
+					<label>Cerrar sesión</label>			
+					<module>default</module>
+					<controller>index</controller>
+					<action>logout</action>
+					<resource>default:index</resource>	
+					<privilege>logout</privilege>			
+				</logout>
+			</pages>
+		</root>
+	</nav>
+</config>
